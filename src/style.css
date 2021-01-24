@@ -1,4 +1,5 @@
 /* CSS Custom Properties Definitions */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 
 :root {
   --maxWidth-none: "none";
@@ -7,9 +8,9 @@
   --maxWidth-md: 28rem;
   --maxWidth-lg: 32rem;
   --maxWidth-xl: 36rem;
-  --maxWidth-2xl: 42rem;
-  --maxWidth-3xl: 48rem;
-  --maxWidth-4xl: 56rem;
+  --maxWidth-2xl: 54rem;
+  --maxWidth-3xl: 60rem;
+  --maxWidth-4xl: 66rem;
   --maxWidth-full: "100%";
   --maxWidth-wrapper: var(--maxWidth-2xl);
   --spacing-px: "1px";
@@ -27,13 +28,13 @@
   --spacing-20: 5rem;
   --spacing-24: 6rem;
   --spacing-32: 8rem;
-  --fontFamily-sans: Montserrat, system-ui, -apple-system, BlinkMacSystemFont,
+  --fontFamily-sans: system-ui, -apple-system,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --fontFamily-serif: "Merriweather", "Georgia", Cambria, "Times New Roman",
+  --fontFamily-serif: "Lora", "Georgia", Cambria, "Times New Roman",
     Times, serif;
   --font-body: var(--fontFamily-serif);
-  --font-heading: var(--fontFamily-sans);
+  --font-heading: var(--fontFamily-serif);
   --fontWeight-normal: 400;
   --fontWeight-medium: 500;
   --fontWeight-semibold: 600;
@@ -47,7 +48,7 @@
   --lineHeight-relaxed: 1.625;
   /* 1.200 Minor Third Type Scale */
   --fontSize-0: 0.833rem;
-  --fontSize-1: 1rem;
+  --fontSize-1: 1.2rem;
   --fontSize-2: 1.2rem;
   --fontSize-3: 1.44rem;
   --fontSize-4: 1.728rem;
