@@ -957,6 +957,19 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@deckdeckgo/highlight-code@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@deckdeckgo/highlight-code/-/highlight-code-2.3.1.tgz#0ef9dfa49828a8b8e8d7856aaa8a4e3b8eb25755"
+  integrity sha512-mnanULviEjLttDWqn8yqUVktL1RGCITTIg8LTw7kOZJKlbQwdyCYOCrCThY9ID2VqjEt1AT1kQvGakz5ETl3iA==
+  dependencies:
+    "@deckdeckgo/utils" "1.3.0"
+    prismjs "^1.21.0"
+
+"@deckdeckgo/utils@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@deckdeckgo/utils/-/utils-1.3.0.tgz#3c99ddd16d729e1cf695c6dd41ce4b617dc0b1a1"
+  integrity sha512-QrV3jyqIlL+u1NUqSyMsnIsfORLqBuzEhK2+rGYCT89TLVhnPpOP0b11aP/XvHyJMzG9mZvjadLN/MQ9ls9UGw==
+
 "@endemolshinegroup/cosmiconfig-typescript-loader@3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@endemolshinegroup/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-3.0.2.tgz#eea4635828dde372838b0909693ebd9aafeec22d"
@@ -5992,6 +6005,15 @@ gatsby-link@^2.10.0:
     "@types/reach__router" "^1.3.6"
     prop-types "^15.7.2"
 
+gatsby-node-helpers@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/gatsby-node-helpers/-/gatsby-node-helpers-0.3.0.tgz#3bdca3b7902a702a5834fef280ad66d51099d57c"
+  integrity sha1-O9yjt5AqcCpYNP7ygK1m1RCZ1Xw=
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    lodash "^4.17.4"
+    p-is-promise "^1.1.0"
+
 gatsby-page-utils@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/gatsby-page-utils/-/gatsby-page-utils-0.8.0.tgz#0cf776b23fa141fbbb85ee975fcffe6f74915a29"
@@ -6202,6 +6224,16 @@ gatsby-remark-copy-linked-files@^2.4.0:
     probe-image-size "^6.0.0"
     unist-util-visit "^1.4.1"
 
+gatsby-remark-highlight-code@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-highlight-code/-/gatsby-remark-highlight-code-2.1.1.tgz#77364643aae4c3b5ebe0b44231de27057eee0aec"
+  integrity sha512-SyIGI4BTur3RcLGnba8JVndQPanS9o5X5Wqa5QdSQl4C2YG5Fj7zpCF0+Z9qvvhGT8FBpvy4W6qtTKfwHcfkbQ==
+  dependencies:
+    gatsby-node-helpers "^0.3.0"
+    lodash "^4.17.15"
+    mdast-util-to-string "^1.1.0"
+    unist-util-visit "^2.0.2"
+
 gatsby-remark-images@^3.5.1:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/gatsby-remark-images/-/gatsby-remark-images-3.10.0.tgz#626bd9b8f26e6611e72af840fd968964d1e45406"
@@ -6288,7 +6320,7 @@ gatsby-telemetry@^1.9.0:
     node-fetch "^2.6.1"
     uuid "3.4.0"
 
-gatsby-transformer-remark@^2.10.0:
+gatsby-transformer-remark@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-2.15.0.tgz#0e489891e2d3fe19ba61c37652e21f311521b876"
   integrity sha512-Dtmzit/akVKnQlhERj0HMxJgkZo+DJ6duSIk7nJrk81R+2uJS3sQCdZEBkv5gYJhPd0fMfh0bbr63kuNB5lzlA==
@@ -10816,7 +10848,7 @@ pretty-format@^25.5.0:
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
-prismjs@^1.22.0:
+prismjs@^1.21.0, prismjs@^1.22.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz#d3b3967f7d72440690497652a9d40ff046067f33"
   integrity sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA==

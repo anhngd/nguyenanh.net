@@ -27,7 +27,7 @@ Nếu bạn sử dụng Python phiên bản từ 2.7.9 trở lên (đối với 
 
 Đề cập nhật ```pip``` hiện thời lên phiên bản mới nhất, bạn dùng câu lệnh
 
-```
+```shell
 python -m pip install --upgrade pip
 ```
 
