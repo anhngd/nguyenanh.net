@@ -1,11 +1,11 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "nguyenanh-blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "a personal blog by Nguyen Anh",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Nguyen Anh <anhnd.hust@gmail.com>",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/anhngd/nguyenanh.net/issues"
   },
   "dependencies": {
     "gatsby": "^2.26.1",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "prettier": "2.2.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://github.com/github.com/anhngd/nguyenanh.net#readme",
   "keywords": [
     "gatsby"
   ],
@@ -42,7 +42,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/anhngd/nguyenanh.net.git"
   },
   "scripts": {
     "build": "gatsby build",
