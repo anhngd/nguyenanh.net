@@ -25,8 +25,7 @@ const Layout = ({ location, title, children }) => {
       <header className="global-header">{header}</header>
       <main>{children}</main>
       <footer>
-        © {new Date().getFullYear()},
-        {` `}
+        © {new Date().getFullYear()},{` `}
         <a href="https://nguyenanh.net">NguyenAnh.net</a>
       </footer>
     </div>

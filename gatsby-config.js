@@ -47,9 +47,9 @@ module.exports = {
           {
             resolve: `gatsby-remark-highlight-code`,
             options: {
-              terminal: 'carbon',
-              theme: 'vscode'
-            }
+              terminal: "carbon",
+              theme: "vscode",
+            },
           },
           {
             resolve: `gatsby-remark-images`,
