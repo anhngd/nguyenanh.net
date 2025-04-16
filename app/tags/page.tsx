@@ -3,10 +3,13 @@ import Tag from '@/components/Tag'
 import { slug } from 'github-slugger'
 import tagData from 'app/tag-data.json'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 
-export const metadata = genPageMetadata({ title: 'Tags', description: 'Things I blog about' })
+export function generateMetadata(): Metadata {
+  return genPageMetadata({ title: 'Tags', description: 'Things I blog about' })
+}
 
-export default async function Page() {
+export default function Page() {
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])

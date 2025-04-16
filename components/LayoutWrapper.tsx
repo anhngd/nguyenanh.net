@@ -1,3 +1,4 @@
+import React from 'react'
 import { Inter } from 'next/font/google'
 import SectionContainer from './SectionContainer'
 import Footer from './Footer'

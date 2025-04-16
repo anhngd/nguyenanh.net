@@ -57,8 +57,8 @@ const securityHeaders = [
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
-module.exports = () => {
-  const plugins = [withContentlayer, withBundleAnalyzer]
+module.exports = withBundleAnalyzer(() => {
+  const plugins = [withContentlayer]
   return plugins.reduce((acc, next) => next(acc), {
     reactStrictMode: true,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
@@ -72,6 +72,10 @@ module.exports = () => {
           hostname: 'picsum.photos',
         },
       ],
+      domains: ['images.unsplash.com', 'localhost'],
+      formats: ['image/avif', 'image/webp'],
+      deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     },
     async headers() {
       return [
@@ -90,4 +94,4 @@ module.exports = () => {
       return config
     },
   })
-}
+})
