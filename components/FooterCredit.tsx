@@ -46,7 +46,9 @@ export default function FooterCredit() {
           )}
         </>
       ) : (
-        <span className="opacity-0">Built with the open-source template by @timlrx. Grateful for the great foundation.</span>
+        <span className="opacity-0">
+          Built with the open-source template by @timlrx. Grateful for the great foundation.
+        </span>
       )}
     </div>
   )

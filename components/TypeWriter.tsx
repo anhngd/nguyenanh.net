@@ -19,7 +19,7 @@ export default function TypeWriter({
   loop = false,
   className = '',
   cursorClassName = 'text-orange-500 dark:text-orange-400',
-  onComplete
+  onComplete,
 }: TypeWriterProps) {
   const [displayText, setDisplayText] = useState('')
   const [isTyping, setIsTyping] = useState(true)
@@ -33,7 +33,7 @@ export default function TypeWriter({
   useEffect(() => {
     // Cursor blinking effect
     cursorRef.current = setInterval(() => {
-      setCursorVisible(prev => !prev)
+      setCursorVisible((prev) => !prev)
     }, 500)
 
     // Delay before starting typing
@@ -50,7 +50,7 @@ export default function TypeWriter({
           }
           setIsTyping(false)
           if (onComplete) onComplete()
-          
+
           if (loop) {
             // Reset after delay
             setTimeout(() => {
@@ -77,7 +77,11 @@ export default function TypeWriter({
   return (
     <span className={className}>
       {displayText}
-      <span className={`${cursorVisible ? 'opacity-100' : 'opacity-0'} ${cursorClassName} transition-opacity duration-100`}>|</span>
+      <span
+        className={`${cursorVisible ? 'opacity-100' : 'opacity-0'} ${cursorClassName} transition-opacity duration-100`}
+      >
+        |
+      </span>
     </span>
   )
 } 

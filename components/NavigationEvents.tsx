@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import NProgress from 'nprogress'
 
 export function NavigationEvents() {
@@ -10,22 +10,29 @@ export function NavigationEvents() {
 
   useEffect(() => {
     // Configure NProgress
-    NProgress.configure({ 
+    NProgress.configure({
       showSpinner: false,
       minimum: 0.1,
       easing: 'ease',
-      speed: 400 
+      speed: 400,
     })
-  }, [])
 
-  useEffect(() => {
-    NProgress.start()
-    
-    // Complete the progress bar with slight delay for visual effect
-    const timer = setTimeout(() => {
-      NProgress.done(true)
-    }, 200)
-    
+    let timer: NodeJS.Timeout
+
+    function startProgress() {
+      timer = setTimeout(() => {
+        NProgress.start()
+      }, 200)
+    }
+
+    function stopProgress() {
+      clearTimeout(timer)
+      NProgress.done()
+    }
+
+    startProgress()
+    stopProgress()
+
     return () => {
       clearTimeout(timer)
       NProgress.remove()

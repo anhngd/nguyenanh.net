@@ -27,50 +27,53 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
   
   // Calculate tag sizes based on count and assign colors
   const { minCount, maxCount, tagStyles } = useMemo(() => {
-    const min = sortedTags.length > 0 ? 
-      Math.min(...sortedTags.map(tag => tagCounts[tag])) : 0;
-    const max = sortedTags.length > 0 ? 
-      Math.max(...sortedTags.map(tag => tagCounts[tag])) : 0;
+    const min = sortedTags.length > 0 
+      ? Math.min(...sortedTags.map((tag) => tagCounts[tag])) : 0
+    const max = sortedTags.length > 0 
+      ? Math.max(...sortedTags.map((tag) => tagCounts[tag])) : 0
       
     // Create a map of tag styles
-    const styles = {} as Record<string, {
-      fontSize: string;
-      padding: string;
-      opacity: number;
-      scale: number;
-      colorClass: string;
-      x: number;
-      y: number;
-      rotateZ: number;
-    }>;
+    const styles = {} as Record<
+      string,
+      {
+        fontSize: string
+        padding: string
+        opacity: number
+        scale: number
+        colorClass: string
+        x: number
+        y: number
+        rotateZ: number
+      }
+    >
     
     // Pre-assign colors to most common tags for consistency
-    const topTags = [...sortedTags].slice(0, TAG_COLORS.length);
-    const colorMap = new Map();
+    const topTags = [...sortedTags].slice(0, TAG_COLORS.length)
+    const colorMap = new Map()
     topTags.forEach((tag, idx) => {
-      colorMap.set(tag, TAG_COLORS[idx % TAG_COLORS.length]);
-    });
+      colorMap.set(tag, TAG_COLORS[idx % TAG_COLORS.length])
+    })
     
-    sortedTags.forEach(tag => {
-      const count = tagCounts[tag];
-      const range = max - min || 1;
-      const ratio = (count - min) / range;
+    sortedTags.forEach((tag) => {
+      const count = tagCounts[tag]
+      const range = max - min || 1
+      const ratio = (count - min) / range
       
       // Scale from 0.9rem to 1.8rem for font size
-      const fontSize = 0.9 + (ratio * 0.9);
+      const fontSize = 0.9 + (ratio * 0.9)
       
       // Scale padding based on font size
-      const paddingV = 0.3 + (ratio * 0.3);
-      const paddingH = 0.7 + (ratio * 0.5);
+      const paddingV = 0.3 + (ratio * 0.3)
+      const paddingH = 0.7 + (ratio * 0.5)
       
       // Use assigned color or get a "random" consistent color based on tag name
       const colorClass = colorMap.get(tag) || 
-        TAG_COLORS[tag.length % TAG_COLORS.length];
+        TAG_COLORS[tag.length % TAG_COLORS.length]
         
       // Thêm vị trí ngẫu nhiên cho hiệu ứng galaxy
-      const x = Math.sin(tag.length * 0.5) * 20;
-      const y = Math.cos(tag.charCodeAt(0) * 0.1) * 20;
-      const rotateZ = (tag.length % 5) * 10 - 20;
+      const x = Math.sin(tag.length * 0.5) * 20
+      const y = Math.cos(tag.charCodeAt(0) * 0.1) * 20
+      const rotateZ = (tag.length % 5) * 10 - 20
       
       styles[tag] = {
         fontSize: `${fontSize}rem`,
@@ -80,17 +83,17 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
         colorClass,
         x,
         y,
-        rotateZ
-      };
-    });
+        rotateZ,
+      }
+    })
     
-    return { minCount: min, maxCount: max, tagStyles: styles };
-  }, [sortedTags, tagCounts]);
+    return { minCount: min, maxCount: max, tagStyles: styles }
+  }, [sortedTags, tagCounts])
   
   // Hàm tính toán vị trí của tag khi cloud effect được kích hoạt
   const getGalaxyPosition = (tag: string, isHovered: boolean) => {
-    const style = tagStyles[tag];
-    const baseTransform = `scale(${style.scale})`;
+    const style = tagStyles[tag]
+    const baseTransform = `scale(${style.scale})`
     
     // Nếu đang hover vào tag cloud
     if (hoveredTag !== null) {
@@ -99,24 +102,24 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
         return {
           transform: `${baseTransform} scale(1.2)`,
           zIndex: 20,
-          filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.3))'
-        };
+          filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.3))',
+        }
       }
       
       // Các tag còn lại di chuyển ra xa theo hiệu ứng
       return {
         transform: `${baseTransform} translate(${style.x}px, ${style.y}px) rotateZ(${style.rotateZ}deg)`,
         transition: 'all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        zIndex: 10
-      };
+        zIndex: 10,
+      }
     }
     
     // Trạng thái ban đầu
     return {
       transform: baseTransform,
-      transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
-    };
-  };
+      transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+    }
+  }
   
   return (
     <div 
@@ -125,8 +128,8 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
     >
       {tagKeys.length === 0 && <p className="font-lexend">No tags found.</p>}
       {sortedTags.map((t) => {
-        const style = tagStyles[t];
-        const isHovered = t === hoveredTag;
+        const style = tagStyles[t]
+        const isHovered = t === hoveredTag
         
         return (
           <div 
@@ -142,7 +145,7 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
                 fontSize: style.fontSize,
                 padding: style.padding,
                 opacity: isHovered ? 1 : style.opacity,
-                backdropFilter: isHovered ? 'blur(4px)' : 'none'
+                backdropFilter: isHovered ? 'blur(4px)' : 'none',
               }}
               aria-label={`View posts tagged ${t}`}
             >
