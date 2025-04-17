@@ -54,44 +54,53 @@ const securityHeaders = [
   },
 ]
 
-/**
- * @type {import('next/dist/next-server/server/config').NextConfig}
- **/
-module.exports = withBundleAnalyzer(() => {
-  const plugins = [withContentlayer]
-  return plugins.reduce((acc, next) => next(acc), {
-    reactStrictMode: true,
-    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    eslint: {
-      dirs: ['app', 'components', 'layouts', 'scripts'],
-    },
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'picsum.photos',
-        },
-      ],
-      domains: ['images.unsplash.com', 'localhost'],
-      formats: ['image/avif', 'image/webp'],
-      deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-      imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    },
-    async headers() {
-      return [
-        {
-          source: '/(.*)',
-          headers: securityHeaders,
-        },
-      ]
-    },
-    webpack: (config, options) => {
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      })
+// You might need to adjust paths if they're different in your project
+const nextConfig = {
+  reactStrictMode: true,
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  eslint: {
+    dirs: ['app', 'components', 'layouts', 'scripts'],
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+    domains: ['images.unsplash.com', 'localhost'],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  experimental: {
+    swcMinify: true,
+  },
+  // Disable Babel for SWC
+  compiler: {
+    // Remove this if you're using emotion for styling
+    styledComponents: false,
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
+  webpack: (config, { dev, isServer }) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
 
-      return config
-    },
-  })
-})
+    return config
+  },
+}
+
+// Combine the configs
+module.exports = () => {
+  const plugins = [withContentlayer, withBundleAnalyzer]
+  return plugins.reduce((acc, plugin) => plugin(acc), nextConfig)
+}

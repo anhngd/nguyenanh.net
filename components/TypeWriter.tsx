@@ -45,7 +45,9 @@ export default function TypeWriter({
           setDisplayText((prev) => prev + text.charAt(indexRef.current))
           indexRef.current += 1
         } else {
-          clearInterval(typingRef.current as NodeJS.Timeout)
+          if (typingRef.current) {
+            clearInterval(typingRef.current)
+          }
           setIsTyping(false)
           if (onComplete) onComplete()
           
@@ -62,8 +64,12 @@ export default function TypeWriter({
     }, delay)
 
     return () => {
-      clearInterval(typingRef.current as NodeJS.Timeout)
-      clearInterval(cursorRef.current as NodeJS.Timeout)
+      if (typingRef.current) {
+        clearInterval(typingRef.current)
+      }
+      if (cursorRef.current) {
+        clearInterval(cursorRef.current)
+      }
       clearTimeout(startTyping)
     }
   }, [text, speed, delay, loop, onComplete])
