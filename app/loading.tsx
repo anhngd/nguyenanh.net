@@ -41,17 +41,17 @@ export default function Loading() {
           
           {/* Rocket animation container */}
           <div className="relative h-60 flex items-end justify-center mb-12">
-            {/* Fire/thrust effect */}
+            {/* Enhanced Fire/thrust effect */}
             <motion.div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 flex flex-col items-center"
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-10 flex flex-col items-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
               <motion.div
-                className="w-5 h-12 rounded-b-full bg-gradient-to-t from-orange-600 via-yellow-500 to-transparent"
+                className="w-7 h-16 rounded-b-full bg-gradient-to-t from-orange-600 via-yellow-500 to-transparent"
                 animate={{
-                  height: ["3rem", "4rem", "3rem"],
+                  height: ["4rem", "5rem", "4rem"],
                   opacity: [0.7, 1, 0.7],
                 }}
                 transition={{
@@ -61,9 +61,9 @@ export default function Loading() {
                 }}
               />
               <motion.div
-                className="w-3 h-10 -mt-2 rounded-b-full bg-gradient-to-t from-yellow-300 via-yellow-100 to-transparent"
+                className="w-5 h-12 -mt-2 rounded-b-full bg-gradient-to-t from-yellow-300 via-yellow-100 to-transparent"
                 animate={{
-                  height: ["2.5rem", "3.5rem", "2.5rem"],
+                  height: ["3rem", "4rem", "3rem"],
                   opacity: [0.7, 1, 0.7],
                 }}
                 transition={{
@@ -74,25 +74,29 @@ export default function Loading() {
                 }}
               />
               
-              {/* Smoke particles */}
-              <div className="absolute bottom-0 w-14 flex justify-center">
-                {[...Array(6)].map((_, i) => (
+              {/* Enhanced Smoke particles */}
+              <div className="absolute bottom-0 w-20 flex justify-center">
+                {[...Array(12)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-3 h-3 rounded-full bg-gray-200 dark:bg-gray-600 opacity-40"
+                    className={`absolute w-${Math.floor(Math.random() * 3) + 2} h-${Math.floor(Math.random() * 3) + 2} rounded-full ${
+                      i % 3 === 0 
+                        ? "bg-orange-200 dark:bg-orange-300 opacity-60" 
+                        : "bg-gray-200 dark:bg-gray-500 opacity-50"
+                    }`}
                     initial={{ 
                       y: 0,
-                      x: (i % 2 === 0 ? -1 : 1) * Math.random() * 5,
+                      x: (i % 2 === 0 ? -1 : 1) * Math.random() * 8,
                       scale: 0 
                     }}
                     animate={{ 
-                      y: [0, 60 + Math.random() * 40], 
-                      x: [(i % 2 === 0 ? -1 : 1) * Math.random() * 5, (i % 2 === 0 ? -1 : 1) * (10 + Math.random() * 20)],
-                      scale: [0, 1 + Math.random() * 2, 0],
-                      opacity: [0, 0.3, 0], 
+                      y: [0, 80 + Math.random() * 60], 
+                      x: [(i % 2 === 0 ? -1 : 1) * Math.random() * 8, (i % 2 === 0 ? -1 : 1) * (15 + Math.random() * 25)],
+                      scale: [0, 1.5 + Math.random() * 2.5, 0],
+                      opacity: [0, 0.4 + Math.random() * 0.3, 0], 
                     }}
                     transition={{ 
-                      duration: 1 + Math.random() * 1.5, 
+                      duration: 1.2 + Math.random() * 1.8, 
                       repeat: Infinity, 
                       delay: Math.random() * 2,
                       ease: "easeOut"
@@ -106,20 +110,30 @@ export default function Loading() {
             <motion.div
               className="relative"
               initial={{ y: 180 }}
-              animate={{ y: 0 }}
+              animate={{ 
+                y: 0,
+                rotate: [0, -1, 1, 0],
+              }}
               transition={{
-                type: "spring",
-                stiffness: 50,
-                damping: 15,
-                delay: 0.2
+                y: {
+                  type: "spring",
+                  stiffness: 50,
+                  damping: 15,
+                  delay: 0.2
+                },
+                rotate: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
               }}
             >
               {/* Glow effect behind A */}
               <motion.div
-                className="absolute -inset-3 rounded-full bg-orange-400/20 blur-xl z-0"
+                className="absolute -inset-4 rounded-full bg-orange-500/30 blur-xl z-0"
                 animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
+                  scale: [1, 1.3, 1],
+                  opacity: [0.3, 0.7, 0.3]
                 }}
                 transition={{
                   duration: 2,
@@ -131,7 +145,7 @@ export default function Loading() {
               {/* The letter A styled as a rocket */}
               <div className="relative z-10">
                 <motion.div 
-                  className="relative w-12 h-20 flex items-center justify-center"
+                  className="relative w-14 h-24 flex items-center justify-center"
                   animate={{
                     y: [0, -8, 0]
                   }}
@@ -141,11 +155,25 @@ export default function Loading() {
                     ease: "easeInOut"
                   }}
                 >
+                  {/* Rocket tip on top of A */}
+                  <motion.div
+                    className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-4 h-6 bg-gradient-to-t from-orange-500 to-orange-300 rounded-t-full"
+                    animate={{
+                      height: [22, 26, 22],
+                      opacity: [0.9, 1, 0.9]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
                   <motion.div
                     className="text-6xl font-bold text-orange-500 relative filter drop-shadow-lg"
                     style={{
-                      fontFamily: "'Lexend', cursive",
-                      fontVariationSettings: "'wght' 600, 'wdth' 100",
+                      fontFamily: "'Lexend', sans-serif",
+                      fontVariationSettings: "'wght' 700, 'wdth' 110",
                     }}
                     animate={{
                       textShadow: [
@@ -164,16 +192,30 @@ export default function Loading() {
                   </motion.div>
                 </motion.div>
                 
-                {/* Small fins on sides */}
+                {/* Enhanced fins on sides */}
                 <motion.div 
-                  className="absolute -left-3 top-1/2 w-3 h-5 bg-gradient-to-r from-transparent to-orange-500 rounded-l-full"
+                  className="absolute -left-4 top-1/2 w-4 h-8 bg-gradient-to-r from-transparent to-orange-500 rounded-l-full"
                   animate={{ rotate: [-5, 5, -5] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <motion.div 
-                  className="absolute -right-3 top-1/2 w-3 h-5 bg-gradient-to-l from-transparent to-orange-500 rounded-r-full"
+                  className="absolute -right-4 top-1/2 w-4 h-8 bg-gradient-to-l from-transparent to-orange-500 rounded-r-full"
                   animate={{ rotate: [5, -5, 5] }}
                   transition={{ duration: 2, repeat: Infinity }}
+                />
+                
+                {/* Bottom thrusters */}
+                <motion.div
+                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 w-8 h-3 bg-orange-600 rounded-full"
+                  animate={{
+                    width: [32, 30, 32],
+                    opacity: [0.9, 1, 0.9]
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
                 />
               </div>
             </motion.div>
@@ -184,10 +226,39 @@ export default function Loading() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="mt-8 text-gray-600 dark:text-gray-300 font-medium"
+            className="mt-8 text-gray-700 dark:text-gray-300 font-medium"
           >
             Loading...
           </motion.div>
+          
+          {/* Additional smoke/fire dots at the bottom */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-32 h-16">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i + 100}
+                className={`absolute rounded-full ${
+                  i % 4 === 0 
+                    ? "bg-orange-400 w-2 h-2" 
+                    : i % 4 === 1 
+                      ? "bg-yellow-300 w-1.5 h-1.5" 
+                      : "bg-gray-400 dark:bg-gray-600 w-2 h-2"
+                }`}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  scale: [1, i % 2 === 0 ? 1.5 : 0.8, 1],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: 1 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </Fragment>
