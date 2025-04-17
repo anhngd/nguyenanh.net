@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
-import SearchButton from './SearchButton'
+import CustomSearchButton from './CustomSearchButton'
 
 const Header = () => {
   const [windowWidth, setWindowWidth] = useState(
@@ -82,7 +82,7 @@ const Header = () => {
               {link.title}
             </Link>
           ))}
-        <SearchButton />
+        <CustomSearchButton />
         <ThemeSwitch />
         <MobileNav />
       </div>

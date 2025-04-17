@@ -13,7 +13,6 @@ import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import { NavigationEvents } from '@/components/NavigationEvents'
 import HeaderSpacer from '@/components/HeaderSpacer'
-import SearchButton from '@/components/SearchButton'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -103,7 +102,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </SectionContainer>
           <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-            <SearchButton />
+            {/* Empty div to satisfy the children prop requirement */}
+            <div />
           </SearchProvider>
         </ThemeProviders>
       </body>
