@@ -1,0 +1,3 @@
+[build]
+  command = "CI= npm install && npm run build"
+  publish = "dist" # hoặc "out", "build" tùy framework
