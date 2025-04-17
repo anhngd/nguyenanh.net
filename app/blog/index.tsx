@@ -7,7 +7,7 @@ import { Metadata } from 'next'
 const POSTS_PER_PAGE = 5
 
 export function generateMetadata(): Metadata {
-  return genPageMetadata({ title: 'Blog' })
+  return genPageMetadata({ title: 'Notes' })
 }
 
 export default function Page() {
@@ -23,11 +23,13 @@ export default function Page() {
   }
 
   return (
-    <ListLayout
-      posts={posts}
-      initialDisplayPosts={initialDisplayPosts}
-      pagination={pagination}
-      title="All Posts"
-    />
+    <div className="max-w-4xl mx-auto">
+      <ListLayout
+        posts={posts}
+        initialDisplayPosts={initialDisplayPosts}
+        pagination={pagination}
+        title="All Notes"
+      />
+    </div>
   )
 } 

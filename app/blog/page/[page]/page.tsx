@@ -24,11 +24,13 @@ export default function Page({ params }: { params: { page: string } }) {
   }
 
   return (
-    <ListLayout
-      posts={posts}
-      initialDisplayPosts={initialDisplayPosts}
-      pagination={pagination}
-      title="All Posts"
-    />
+    <div className="max-w-4xl mx-auto">
+      <ListLayout
+        posts={posts}
+        initialDisplayPosts={initialDisplayPosts}
+        pagination={pagination}
+        title="All Notes"
+      />
+    </div>
   )
 }

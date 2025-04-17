@@ -27,9 +27,9 @@ export default function Page() {
         </p>
       </div>
       
-      <div className="container py-12">
+      <div className="container max-w-4xl mx-auto py-12">
         <div className="flex flex-col items-center">
-          <div className="bg-gray-50/70 dark:bg-gray-900/30 backdrop-blur-sm rounded-xl p-8 shadow-lg w-full max-w-4xl min-h-[500px] border border-gray-100 dark:border-gray-800 overflow-hidden">
+          <div className="bg-gray-50/70 dark:bg-gray-900/30 backdrop-blur-sm rounded-xl p-8 shadow-lg w-full min-h-[500px] border border-gray-100 dark:border-gray-800 overflow-hidden">
             <div className="absolute w-[600px] h-[600px] bg-gradient-radial from-blue-500/10 to-transparent rounded-full -top-64 -left-20 blur-3xl"></div>
             <div className="absolute w-[500px] h-[500px] bg-gradient-radial from-purple-500/10 to-transparent rounded-full -bottom-40 -right-20 blur-3xl"></div>
             <TagCloud tagCounts={tagCounts} />

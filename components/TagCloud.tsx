@@ -186,7 +186,7 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
   
   return (
     <div 
-      className="relative flex flex-wrap gap-4 pt-6 md:pt-0 max-w-4xl justify-center mx-auto min-h-[400px] perspective-[800px]"
+      className="relative flex flex-wrap gap-4 pt-6 md:pt-0 justify-center mx-auto min-h-[400px] perspective-[800px]"
       onMouseLeave={handleTagMouseLeave}
     >
       {tagKeys.length === 0 && <p className="font-lexend">No tags found.</p>}

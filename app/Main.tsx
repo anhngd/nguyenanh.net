@@ -55,6 +55,19 @@ export default function Home({ posts }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
+  // Get appropriate max width class based on screen size
+  const getMaxWidthClass = () => {
+    if (windowWidth > 1920) {
+      return 'max-w-7xl'; // For very large screens (>1920px) - 80rem or 1280px
+    } else if (windowWidth > 1440) {
+      return 'max-w-6xl'; // For large screens (>1440px) - 72rem or 1152px
+    } else if (windowWidth > 1024) {
+      return 'max-w-5xl'; // For medium-large screens (>1024px) - 64rem or 1024px
+    } else {
+      return 'max-w-full'; // For smaller screens, allow full width with padding
+    }
+  };
+  
   // Add animation when component mounts
   useEffect(() => {
     // Delay the animation to make it noticeable after page load
@@ -110,7 +123,7 @@ export default function Home({ posts }) {
       
       {/* Hero section with frame */}
       <div className="relative min-h-[100vh] w-full flex items-center justify-center px-4 md:px-6">
-        <div className={`flex w-full ${isSmallScreen ? 'max-w-full' : 'max-w-6xl'} flex-col-reverse items-center gap-12 py-8 ${isSmallScreen ? 'md:flex-col' : 'md:flex-row'} md:items-center md:justify-between md:py-20`}>
+        <div className={`flex w-full ${getMaxWidthClass()} flex-col-reverse items-center gap-12 py-8 ${isSmallScreen ? 'md:flex-col' : 'md:flex-row'} md:items-center md:justify-between md:py-20`}>
           {/* Text content */}
           <div className={`w-full text-center ${isSmallScreen ? 'md:text-center md:w-full' : 'md:text-left md:w-1/2'}`}>
             <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white overflow-hidden">
@@ -187,7 +200,7 @@ export default function Home({ posts }) {
       
       {/* Latest posts section */}
       <div ref={blogSectionRef} className="relative bg-white/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-950/90 md:px-6 rounded-t-3xl shadow-lg">
-        <div className={`mx-auto ${isSmallScreen ? 'max-w-full' : 'max-w-6xl'}`}>
+        <div className={`mx-auto ${getMaxWidthClass()}`}>
           <div className="space-y-2 pb-12 md:space-y-5">
             <h2 className="font-prompt text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
               Latest Posts
@@ -278,7 +291,7 @@ export default function Home({ posts }) {
       {/* Newsletter section */}
       {siteMetadata.newsletter?.provider && (
         <div className="relative bg-gray-50/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-900/90 md:px-6">
-          <div className={`mx-auto ${isSmallScreen ? 'max-w-full' : 'max-w-3xl'} rounded-2xl bg-orange-500/10 p-8 dark:bg-orange-500/5`}>
+          <div className={`mx-auto ${getMaxWidthClass()} rounded-2xl bg-orange-500/10 p-8 dark:bg-orange-500/5`}>
             <NewsletterForm />
           </div>
         </div>

@@ -14,10 +14,10 @@ export default function Page() {
   const mainContent = coreContent(author)
 
   return (
-    <>
+    <div className="max-w-4xl mx-auto">
       <AuthorLayout content={mainContent}>
         <MDXLayoutRenderer code={author.body.code} />
       </AuthorLayout>
-    </>
+    </div>
   )
 }
