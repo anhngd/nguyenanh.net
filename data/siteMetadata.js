@@ -1,17 +1,17 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
   title: 'Personal Blog',
-  author: 'Nguyen Anh (anhngd)',
+  author: 'Nguyen Anh (anhnd)',
   headerTitle: 'Nguyen Anh',
-  description: 'A personal blog created by anhngd',
+  description: 'Simple notes by anhnd',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://nguyenanh.net',
-  siteRepo: 'https://github.com/anhngd/nguyenanh.net',
+  siteUrl: 'https://anhnd.com',
+  siteRepo: 'https://github.com/anhngd/anhnd.com',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'me@nguyenanh.net',
+  email: 'me@anhnd.com',
   github: 'https://github.com/anhngd',
   x: 'https://twitter.com/anhngd',
   // twitter: 'https://twitter.com/Twitter',

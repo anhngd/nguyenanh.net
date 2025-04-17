@@ -106,7 +106,7 @@ export default function Home({ posts }) {
         <div className={`flex w-full ${isSmallScreen ? 'max-w-full' : 'max-w-6xl'} flex-col-reverse items-center gap-12 py-8 ${isSmallScreen ? 'md:flex-col' : 'md:flex-row'} md:items-center md:justify-between md:py-20`}>
           {/* Text content */}
           <div className={`w-full text-center ${isSmallScreen ? 'md:text-center md:w-full' : 'md:text-left md:w-1/2'}`}>
-            <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white overflow-hidden">
+            <h1 className="font-google tracking-tight text-gray-900 dark:text-white overflow-hidden">
               <span className={`text-5xl md:text-6xl lg:text-7xl block font-normal mb-2 transform transition-all duration-1000 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
                 Hello,
               </span>
@@ -121,13 +121,13 @@ export default function Home({ posts }) {
             <div className={`mt-12 flex flex-wrap justify-center gap-4 ${isSmallScreen ? 'md:justify-center' : 'md:justify-start'} transform transition-all duration-700 delay-700 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
               <button
                 onClick={scrollToBlogSection}
-                className="font-prompt relative overflow-hidden rounded-full bg-orange-500 px-8 py-3 text-center text-base font-medium text-white shadow-lg transition-all duration-300 hover:shadow-orange-500/30 hover:translate-y-[-2px]"
+                className="font-google relative overflow-hidden rounded-full bg-orange-500 px-8 py-3 text-center text-base font-medium text-white shadow-lg transition-all duration-300 hover:shadow-orange-500/30 hover:translate-y-[-2px]"
               >
                 Read my blog
               </button>
               <Link
                 href="/about"
-                className="font-prompt relative overflow-hidden rounded-full border-2 border-gray-300 bg-transparent px-8 py-3 text-center text-base font-medium text-gray-900 transition-all duration-300 hover:border-orange-500 hover:text-orange-500 hover:shadow-lg dark:border-gray-700 dark:text-white dark:hover:border-orange-500 dark:hover:text-orange-500"
+                className="font-google relative overflow-hidden rounded-full border-2 border-gray-300 bg-transparent px-8 py-3 text-center text-base font-medium text-gray-900 transition-all duration-300 hover:border-orange-500 hover:text-orange-500 hover:shadow-lg dark:border-gray-700 dark:text-white dark:hover:border-orange-500 dark:hover:text-orange-500"
               >
                 About me
               </Link>
@@ -180,65 +180,56 @@ export default function Home({ posts }) {
       <div ref={blogSectionRef} className="relative bg-white/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-950/90 md:px-6 rounded-t-3xl shadow-lg">
         <div className={`mx-auto ${isSmallScreen ? 'max-w-full' : 'max-w-6xl'}`}>
           <div className="space-y-2 pb-12 md:space-y-5">
-            <h2 className="font-prompt text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
+            <h2 className="font-google text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
               Latest Posts
             </h2>
-            <p className="font-lexend text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+            <p className="font-google text-lg leading-relaxed text-gray-600 dark:text-gray-400">
               {siteMetadata.description}
             </p>
           </div>
           
-          <div className="space-y-8">
+          <div className="divide-y divide-gray-200 dark:divide-gray-800">
             {!posts.length && 'No posts found.'}
             {posts.slice(0, MAX_DISPLAY).map((post) => {
               const { slug, date, title, summary, tags } = post
               return (
-                <div 
-                  key={slug} 
-                  className="group p-6 rounded-xl transition-all duration-300 cursor-pointer hover:bg-white hover:shadow-xl dark:hover:bg-gray-800/50 border border-transparent hover:border-gray-100 dark:hover:border-gray-700"
-                  onClick={() => window.location.href = `/blog/${slug}`}
-                >
+                <div key={slug} className="group py-12 transition-all hover:bg-gray-50 dark:hover:bg-gray-900">
                   <article>
-                    <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0 xl:gap-6">
-                      <dl className="xl:border-r xl:pr-6 xl:dark:border-gray-700">
+                    <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                      <dl>
                         <dt className="sr-only">Published on</dt>
-                        <dd className="font-lexend text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                        <dd className="font-google text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                           <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                         </dd>
                       </dl>
                       <div className="space-y-5 xl:col-span-3">
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                           <div>
-                            <h3 className="font-prompt text-2xl font-bold leading-8 tracking-tight text-gray-900 dark:text-gray-100 group-hover:text-orange-500 transition-colors">
+                            <h3 className="font-google text-2xl font-bold leading-8 tracking-tight transition-colors group-hover:text-orange-500">
                               <Link
                                 href={`/blog/${slug}`}
                                 className="text-gray-900 dark:text-gray-100"
-                                onClick={(e) => e.stopPropagation()}
                               >
                                 {title}
                               </Link>
                             </h3>
-                            <div className="mt-3 flex flex-wrap gap-2">
+                            <div className="mt-2 flex flex-wrap">
                               {tags.map((tag) => (
                                 <Tag key={tag} text={tag} />
                               ))}
                             </div>
                           </div>
-                          <div className="font-lexend prose max-w-none text-gray-500 dark:text-gray-400 line-clamp-3">
+                          <div className="font-google prose max-w-none text-gray-500 dark:text-gray-400">
                             {summary}
                           </div>
                         </div>
                         <div className="text-base font-medium leading-6">
                           <Link
                             href={`/blog/${slug}`}
-                            className="font-lexend text-orange-500 inline-flex items-center gap-1 hover:gap-2 transition-all hover:opacity-80 hover:underline"
+                            className="text-orange-500 hover:opacity-80"
                             aria-label={`Read more: "${title}"`}
-                            onClick={(e) => e.stopPropagation()}
                           >
-                            Read more
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
+                            Read more &rarr;
                           </Link>
                         </div>
                       </div>
@@ -253,7 +244,7 @@ export default function Home({ posts }) {
             <div className="mt-12 flex justify-center md:justify-end">
               <Link
                 href="/blog"
-                className="font-prompt inline-flex items-center gap-2 rounded-full border-2 border-gray-300 bg-transparent px-6 py-2 text-center text-base font-medium text-gray-900 transition-all duration-300 hover:border-orange-500 hover:text-orange-500 hover:shadow-md dark:border-gray-700 dark:text-white dark:hover:border-orange-500 dark:hover:text-orange-500"
+                className="font-google inline-flex items-center gap-2 rounded-full border-2 border-gray-300 bg-transparent px-6 py-2 text-center text-base font-medium text-gray-900 transition-all duration-300 hover:border-orange-500 hover:text-orange-500 hover:shadow-md dark:border-gray-700 dark:text-white dark:hover:border-orange-500 dark:hover:text-orange-500"
                 aria-label="All posts"
               >
                 View all posts

@@ -72,6 +72,31 @@ input:-webkit-autofill:focus {
   overflow: auto hidden;
 }
 
+.math-display {
+  @apply my-6;
+}
+
+/* Custom font classes */
+.font-prompt {
+  font-family: var(--font-prompt);
+}
+
+.font-lexend {
+  font-family: var(--font-lexend);
+}
+
+.font-google {
+  font-family: var(--font-prompt), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+.font-google-text {
+  font-family: var(--font-lexend), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
 .content-header-link {
   opacity: 0;
   margin-left: -24px;
@@ -86,4 +111,132 @@ input:-webkit-autofill:focus {
 .linkicon {
   display: inline-block;
   vertical-align: middle;
+}
+
+/* Custom NProgress styling */
+#nprogress .bar {
+  background: theme('colors.orange.500') !important;
+  height: 3px !important;
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 10px theme('colors.orange.500');
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px theme('colors.orange.500'), 0 0 5px theme('colors.orange.500') !important;
+}
+
+/* Floating animation for home items */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Content appearing animation */
+@keyframes contentAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-content-appear {
+  animation: contentAppear 0.8s ease-out forwards;
+}
+
+.animate-content-appear-delay-1 {
+  animation: contentAppear 0.8s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-content-appear-delay-2 {
+  animation: contentAppear 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-content-appear-delay-3 {
+  animation: contentAppear 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Add page transition effects */
+.page-transition-enter {
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 350ms, transform 350ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 350ms;
+}
+
+/* Add typing cursor animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+/* Link hover effect for footer */
+.footer-link {
+  position: relative;
+  display: inline-block;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: theme('colors.orange.500');
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.dark .footer-link::after {
+  background-color: theme('colors.orange.400');
 }

@@ -1,15 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Image from 'next/image'
 import Link from './Link'
-import MobileNav from './MobileNav'
+import MobileNavWithActive from './MobileNavWithActive'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 
-const Header = () => {
+const HeaderWithActiveNav = () => {
+  const pathname = usePathname() || ''
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 0
   );
@@ -29,6 +31,14 @@ const Header = () => {
   
   // Check if screen is smaller than or equal to 2/3 of full HD (1280px)
   const isSmallScreen = windowWidth <= 1280;
+  
+  // Function to check if link is active
+  const isActiveLink = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
   
   return (
     <header className={`flex items-center justify-between py-10 ${isSmallScreen ? 'w-full' : ''}`}>
@@ -53,21 +63,31 @@ const Header = () => {
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         {headerNavLinks
           .filter((link) => link.href !== '/')
-          .map((link) => (
-            <Link
-              key={link.title}
-              href={link.href}
-              className="hidden font-medium text-gray-900 dark:text-gray-100 sm:block font-prompt"
-            >
-              {link.title}
-            </Link>
-          ))}
+          .map((link) => {
+            const isActive = isActiveLink(link.href)
+            return (
+              <Link
+                key={link.title}
+                href={link.href}
+                className={`hidden font-medium sm:block font-prompt transition-colors duration-300 ${
+                  isActive 
+                    ? 'text-orange-500 dark:text-orange-400 font-bold' 
+                    : 'text-gray-900 dark:text-gray-100 hover:text-orange-500 dark:hover:text-orange-400'
+                }`}
+              >
+                {link.title}
+                {isActive && (
+                  <span className="block h-0.5 bg-orange-500 dark:bg-orange-400 transform transition-all duration-300 mt-0.5" />
+                )}
+              </Link>
+            )
+          })}
         <SearchButton />
         <ThemeSwitch />
-        <MobileNav />
+        <MobileNavWithActive />
       </div>
     </header>
   )
 }
 
-export default Header
+export default HeaderWithActiveNav 
