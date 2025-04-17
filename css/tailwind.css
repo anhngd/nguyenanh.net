@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-google: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --color-google-blue: #4285f4;
+  --color-google-red: #ea4335;
+  --color-google-yellow: #fbbc05;
+  --color-google-green: #34a853;
+}
+
+/* Google style */
+.font-google {
+  font-family: var(--font-google);
+}
+
+.text-google-blue {
+  color: var(--color-google-blue);
+}
+
+.bg-google-blue {
+  background-color: var(--color-google-blue);
+}
+
+.google-gradient-text {
+  background: linear-gradient(
+    to right,
+    var(--color-google-blue),
+    var(--color-google-red),
+    var(--color-google-yellow),
+    var(--color-google-green)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
 .task-list-item::before {
   @apply hidden;
 }
