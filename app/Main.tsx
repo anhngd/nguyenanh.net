@@ -15,7 +15,7 @@ export default function Home({ posts }) {
   const blogSectionRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [isTextVisible, setIsTextVisible] = useState(false);
+  const [isTextVisible, setIsTextVisible] = useState(true);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 0
   );
@@ -123,22 +123,22 @@ export default function Home({ posts }) {
       
       {/* Hero section with frame */}
       <div className="relative min-h-[100vh] w-full flex items-center justify-center px-4 md:px-6">
-        <div className={`flex w-full ${getMaxWidthClass()} flex-col-reverse items-center gap-12 py-8 ${isSmallScreen ? 'md:flex-col' : 'md:flex-row'} md:items-center md:justify-between md:py-20`}>
-          {/* Text content */}
-          <div className={`w-full text-center ${isSmallScreen ? 'md:text-center md:w-full' : 'md:text-left md:w-1/2'}`}>
-            <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white overflow-hidden">
-              <span className={`text-5xl md:text-6xl lg:text-7xl block font-normal mb-2 transform transition-all duration-1000 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}>
+        <div className="w-full max-w-4xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-8 md:py-20">
+          {/* Text content - Always on left for md screens and up */}
+          <div className="w-full md:w-1/2 text-center md:text-left">
+            <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white">
+              <span className="text-5xl md:text-6xl lg:text-7xl block font-normal mb-2">
                 Hello,
               </span>
-              <span className={`text-5xl md:text-6xl lg:text-7xl block font-light mt-2 transform transition-all duration-1000 delay-300 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'} font-lexend`}>
+              <span className="text-5xl md:text-6xl lg:text-7xl block font-light mt-2 font-lexend">
                 I am <span className="text-orange-500 relative inline-block">
                   <NameTyper />
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-orange-500 transition-all duration-1000 delay-1000"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-orange-500"></span>
                 </span>
               </span>
             </h1>
             
-            <div className={`mt-12 flex flex-wrap justify-center gap-4 ${isSmallScreen ? 'md:justify-center' : 'md:justify-start'} transform transition-all duration-700 delay-700 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}>
+            <div className="mt-12 flex flex-wrap justify-center md:justify-start gap-4">
               <button
                 onClick={scrollToBlogSection}
                 className="font-prompt relative overflow-hidden rounded-full bg-orange-500 px-8 py-3 text-center text-base font-medium text-white shadow-lg transition-all duration-300 hover:shadow-orange-500/30 hover:translate-y-[-2px]"
@@ -154,9 +154,9 @@ export default function Home({ posts }) {
             </div>
           </div>
           
-          {/* Avatar with frame */}
-          <div className={`w-full ${isSmallScreen ? 'md:w-full' : 'md:w-1/2'} flex justify-center transform transition-all duration-1000 delay-500 ${isTextVisible ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-0 opacity-100 rotate-0'}`}>
-            <div className={`relative ${isSmallScreen ? 'h-56 w-56 md:h-80 md:w-80' : 'h-64 w-64 md:h-96 md:w-96'}`}>
+          {/* Avatar with frame - Always on right for md screens and up */}
+          <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+            <div className="relative h-56 w-56 md:h-80 md:w-80">
               {/* Avatar container with shadow */}
               <div className="absolute inset-0 overflow-hidden rounded-full shadow-2xl">
                 <Image
@@ -200,7 +200,7 @@ export default function Home({ posts }) {
       
       {/* Latest posts section */}
       <div ref={blogSectionRef} className="relative bg-white/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-950/90 md:px-6 rounded-t-3xl shadow-lg">
-        <div className={`mx-auto ${getMaxWidthClass()}`}>
+        <div className="mx-auto max-w-4xl">
           <div className="space-y-2 pb-12 md:space-y-5">
             <h2 className="font-prompt text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
               Latest Posts
