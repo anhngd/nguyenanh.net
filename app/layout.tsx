@@ -11,7 +11,7 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
-import { NavigationEvents } from '@/components/NavigationEvents'
+import NavigationEvents from '@/components/NavigationEvents'
 import HeaderSpacer from '@/components/HeaderSpacer'
 
 const space_grotesk = Space_Grotesk({

@@ -1,10 +1,10 @@
 'use client'
 
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { motion } from 'framer-motion'
 
-export default function PageTransitionEffect() {
+function PageTransitionEffect() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -64,5 +64,13 @@ export default function PageTransitionEffect() {
         }}
       />
     </>
+  )
+}
+
+export default function PageTransitionEffectWrapper() {
+  return (
+    <Suspense fallback={null}>
+      <PageTransitionEffect />
+    </Suspense>
   )
 } 
