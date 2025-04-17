@@ -65,6 +65,12 @@ export default function Home({ posts }) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Add hydration fix for SSR
+  useEffect(() => {
+    // Force immediate visibility for initial render
+    setIsTextVisible(true);
+  }, []);
+
   // Function to scroll to blog section when "Read my blog" is clicked
   const scrollToBlogSection = (e) => {
     e.preventDefault();
@@ -108,18 +114,18 @@ export default function Home({ posts }) {
           {/* Text content */}
           <div className={`w-full text-center ${isSmallScreen ? 'md:text-center md:w-full' : 'md:text-left md:w-1/2'}`}>
             <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white overflow-hidden">
-              <span className={`text-5xl md:text-6xl lg:text-7xl block font-normal mb-2 transform transition-all duration-1000 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <span className={`text-5xl md:text-6xl lg:text-7xl block font-normal mb-2 transform transition-all duration-1000 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}>
                 Hello,
               </span>
-              <span className={`text-5xl md:text-6xl lg:text-7xl block font-light mt-2 transform transition-all duration-1000 delay-300 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} font-lexend`}>
+              <span className={`text-5xl md:text-6xl lg:text-7xl block font-light mt-2 transform transition-all duration-1000 delay-300 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'} font-lexend`}>
                 I am <span className="text-orange-500 relative inline-block">
                   <NameTyper />
-                  <span className="absolute -bottom-1 left-0 w-0 h-1 bg-orange-500 transition-all duration-1000 delay-1000" style={{ width: isTextVisible ? '100%' : '0%' }}></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-orange-500 transition-all duration-1000 delay-1000"></span>
                 </span>
               </span>
             </h1>
             
-            <div className={`mt-12 flex flex-wrap justify-center gap-4 ${isSmallScreen ? 'md:justify-center' : 'md:justify-start'} transform transition-all duration-700 delay-700 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <div className={`mt-12 flex flex-wrap justify-center gap-4 ${isSmallScreen ? 'md:justify-center' : 'md:justify-start'} transform transition-all duration-700 delay-700 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-0 opacity-100'}`}>
               <button
                 onClick={scrollToBlogSection}
                 className="font-prompt relative overflow-hidden rounded-full bg-orange-500 px-8 py-3 text-center text-base font-medium text-white shadow-lg transition-all duration-300 hover:shadow-orange-500/30 hover:translate-y-[-2px]"
@@ -136,7 +142,7 @@ export default function Home({ posts }) {
           </div>
           
           {/* Avatar with frame */}
-          <div className={`w-full ${isSmallScreen ? 'md:w-full' : 'md:w-1/2'} flex justify-center transform transition-all duration-1000 delay-500 ${isTextVisible ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-10 opacity-0 rotate-12'}`}>
+          <div className={`w-full ${isSmallScreen ? 'md:w-full' : 'md:w-1/2'} flex justify-center transform transition-all duration-1000 delay-500 ${isTextVisible ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-0 opacity-100 rotate-0'}`}>
             <div className={`relative ${isSmallScreen ? 'h-56 w-56 md:h-80 md:w-80' : 'h-64 w-64 md:h-96 md:w-96'}`}>
               {/* Avatar container with shadow */}
               <div className="absolute inset-0 overflow-hidden rounded-full shadow-2xl">
@@ -147,6 +153,8 @@ export default function Home({ posts }) {
                   style={{objectFit: 'cover'}}
                   className="transition-transform duration-700 hover:scale-105"
                   priority
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdwI2QVQpZQAAAABJRU5ErkJggg=="
                 />
               </div>
               

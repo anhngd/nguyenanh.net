@@ -1,30 +1,9 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { motion } from 'framer-motion'
 
-export default function Loading() {
-  const [fontLoaded, setFontLoaded] = useState(false);
-  const [showLoading, setShowLoading] = useState(true);
-  
-  // Make sure we only show the animation after fonts have loaded
-  // and enforce a minimum loading time of 200ms
-  useEffect(() => {
-    setFontLoaded(true);
-    
-    // Set minimum loading time of 200ms
-    const minLoadingTimer = setTimeout(() => {
-      setShowLoading(false);
-    }, 200);
-    
-    return () => {
-      clearTimeout(minLoadingTimer);
-    };
-  }, []);
-  
-  // If no longer showing loading, return null
-  if (!showLoading) return null;
-  
+export default function PageTransition() {
   return (
     <Fragment>
       <div className="fixed inset-0 z-50 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center overflow-hidden">
