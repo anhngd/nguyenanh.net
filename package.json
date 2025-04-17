@@ -1,5 +1,5 @@
 {
-  "name": "tailwind-nextjs-starter-blog",
+  "name": "anhnd-com",
   "version": "2.2.0",
   "private": true,
   "scripts": {
@@ -95,5 +95,5 @@
     "react-dom": "18.3.1",
     "next": "14.2.3"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@4.9.1"
 }
