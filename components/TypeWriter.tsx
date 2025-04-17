@@ -7,6 +7,7 @@ interface TypeWriterProps {
   speed?: number
   delay?: number
   loop?: boolean
+  loopDelay?: number
   className?: string
   cursorClassName?: string
   onComplete?: () => void
@@ -17,6 +18,7 @@ export default function TypeWriter({
   speed = 50,
   delay = 1000,
   loop = false,
+  loopDelay = 3000,
   className = '',
   cursorClassName = 'text-orange-500 dark:text-orange-400',
   onComplete,
@@ -26,53 +28,73 @@ export default function TypeWriter({
   const [cursorVisible, setCursorVisible] = useState(true)
   const typingRef = useRef<NodeJS.Timeout | null>(null)
   const cursorRef = useRef<NodeJS.Timeout | null>(null)
+  const loopTimerRef = useRef<NodeJS.Timeout | null>(null)
   const indexRef = useRef(0)
   const pauseRef = useRef(false)
 
   // Typing effect
   useEffect(() => {
+    // Initial text display (to fix potential issues with first character)
+    setDisplayText('')
+    
     // Cursor blinking effect
     cursorRef.current = setInterval(() => {
       setCursorVisible((prev) => !prev)
     }, 500)
 
-    // Delay before starting typing
-    const startTyping = setTimeout(() => {
-      typingRef.current = setInterval(() => {
-        if (pauseRef.current) return
-
-        if (indexRef.current < text.length) {
-          setDisplayText((prev) => prev + text.charAt(indexRef.current))
-          indexRef.current += 1
-        } else {
-          if (typingRef.current) {
-            clearInterval(typingRef.current)
+    const startTypingSequence = () => {
+      // Reset state for new typing sequence
+      indexRef.current = 0
+      setDisplayText('') // Clear text before starting new sequence
+      setIsTyping(true)
+      
+      // Ensure a small delay before starting typing to allow state to settle
+      setTimeout(() => {
+        // Create a function that types a single character
+        const typeChar = () => {
+          if (pauseRef.current) return;
+          
+          if (indexRef.current < text.length) {
+            setDisplayText((prev) => {
+              const nextChar = text.charAt(indexRef.current);
+              return prev + nextChar;
+            });
+            indexRef.current += 1;
+            
+            // Schedule next character
+            typingRef.current = setTimeout(typeChar, speed);
+          } else {
+            setIsTyping(false);
+            if (onComplete) onComplete();
           }
-          setIsTyping(false)
-          if (onComplete) onComplete()
+        };
+        
+        // Start typing the first character immediately
+        typeChar();
+      }, 50); // Small initial delay
+    }
 
-          if (loop) {
-            // Reset after delay
-            setTimeout(() => {
-              indexRef.current = 0
-              setDisplayText('')
-              setIsTyping(true)
-            }, delay * 2)
-          }
+    // Start initial typing
+    startTypingSequence()
+
+    // Set up loop timer if looping is enabled
+    if (loop) {
+      loopTimerRef.current = setInterval(() => {
+        // Clear any existing typing interval
+        if (typingRef.current) {
+          clearTimeout(typingRef.current)
         }
-      }, speed)
-    }, delay)
+        
+        startTypingSequence()
+      }, loopDelay) // Restart every X seconds (3 seconds by default)
+    }
 
     return () => {
-      if (typingRef.current) {
-        clearInterval(typingRef.current)
-      }
-      if (cursorRef.current) {
-        clearInterval(cursorRef.current)
-      }
-      clearTimeout(startTyping)
+      if (typingRef.current) clearTimeout(typingRef.current)
+      if (cursorRef.current) clearInterval(cursorRef.current)
+      if (loopTimerRef.current) clearInterval(loopTimerRef.current)
     }
-  }, [text, speed, delay, loop, onComplete])
+  }, [text, speed, delay, loop, loopDelay, onComplete])
 
   return (
     <span className={className}>

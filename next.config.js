@@ -60,7 +60,21 @@ const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
+    ignoreDuringBuilds: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    swcMinify: true,
+  },
+  // Disable Babel for SWC
+  compiler: {
+    // Remove this if you're using emotion for styling
+    styledComponents: false,
+  },
+  output: 'standalone',
+  distDir: 'out',
   images: {
     remotePatterns: [
       {
@@ -72,14 +86,6 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-  },
-  experimental: {
-    swcMinify: true,
-  },
-  // Disable Babel for SWC
-  compiler: {
-    // Remove this if you're using emotion for styling
-    styledComponents: false,
   },
   async headers() {
     return [

@@ -7,6 +7,7 @@ import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import Image from 'next/image'
 import { useRef, useState, useEffect } from 'react'
+import NameTyper from '@/components/NameTyper'
 
 const MAX_DISPLAY = 5
 
@@ -110,9 +111,9 @@ export default function Home({ posts }) {
               <span className={`text-5xl md:text-6xl lg:text-7xl block font-normal mb-2 transform transition-all duration-1000 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
                 Hello,
               </span>
-              <span className={`text-5xl md:text-6xl lg:text-7xl block font-bold mt-2 transform transition-all duration-1000 delay-300 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+              <span className={`text-5xl md:text-6xl lg:text-7xl block font-light mt-2 transform transition-all duration-1000 delay-300 ${isTextVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} font-lexend`}>
                 I am <span className="text-orange-500 relative inline-block">
-                  AnhND
+                  <NameTyper />
                   <span className="absolute -bottom-1 left-0 w-0 h-1 bg-orange-500 transition-all duration-1000 delay-1000" style={{ width: isTextVisible ? '100%' : '0%' }}></span>
                 </span>
               </span>
@@ -338,6 +339,16 @@ export default function Home({ posts }) {
         @keyframes underline {
           from { width: 0; }
           to { width: 100%; }
+        }
+        
+        /* Cursor blink animation */
+        .animate-blink {
+          animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
       `}</style>
     </>

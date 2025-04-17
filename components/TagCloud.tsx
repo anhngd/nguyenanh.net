@@ -2,7 +2,7 @@
 
 import Link from '@/components/Link'
 import { slug } from 'github-slugger'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 
 interface TagCloudProps {
   tagCounts: Record<string, number>
@@ -24,6 +24,38 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
   
   // State để theo dõi tag đang được hover
   const [hoveredTag, setHoveredTag] = useState<string | null>(null)
+  const [isHoverable, setIsHoverable] = useState(true)
+  const hoverDelayTimer = useRef<NodeJS.Timeout | null>(null)
+  const autoRefreshTimer = useRef<NodeJS.Timeout | null>(null)
+  
+  // Auto-refresh effect - tự động kích hoạt hiệu ứng mỗi 3 giây
+  useEffect(() => {
+    const triggerAutoRefresh = () => {
+      // Chọn một tag ngẫu nhiên để hiển thị
+      if (sortedTags.length > 0 && hoveredTag === null) {
+        const randomIndex = Math.floor(Math.random() * Math.min(10, sortedTags.length))
+        const randomTag = sortedTags[randomIndex]
+        
+        // Kích hoạt hiệu ứng
+        setHoveredTag(randomTag)
+        
+        // Sau 1.5 giây, reset hiệu ứng
+        setTimeout(() => {
+          setHoveredTag(null)
+        }, 1500)
+      }
+    }
+    
+    // Khởi tạo chu kỳ tự động kích hoạt mỗi 3 giây
+    autoRefreshTimer.current = setInterval(triggerAutoRefresh, 3000)
+    
+    // Cleanup khi component unmount
+    return () => {
+      if (autoRefreshTimer.current) {
+        clearInterval(autoRefreshTimer.current)
+      }
+    }
+  }, [sortedTags, hoveredTag])
   
   // Calculate tag sizes based on count and assign colors
   const { minCount, maxCount, tagStyles } = useMemo(() => {
@@ -59,8 +91,8 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
       const range = max - min || 1
       const ratio = (count - min) / range
       
-      // Scale from 0.9rem to 1.8rem for font size
-      const fontSize = 0.9 + (ratio * 0.9)
+      // Scale from 1.0rem to 2.0rem for font size - INCREASED BASE SIZE
+      const fontSize = 1.0 + (ratio * 1.0)
       
       // Scale padding based on font size
       const paddingV = 0.3 + (ratio * 0.3)
@@ -70,16 +102,16 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
       const colorClass = colorMap.get(tag) || 
         TAG_COLORS[tag.length % TAG_COLORS.length]
         
-      // Thêm vị trí ngẫu nhiên cho hiệu ứng galaxy
-      const x = Math.sin(tag.length * 0.5) * 20
-      const y = Math.cos(tag.charCodeAt(0) * 0.1) * 20
+      // Thêm vị trí ngẫu nhiên cho hiệu ứng galaxy - INCREASED RADIUS
+      const x = Math.sin(tag.length * 0.5) * 25
+      const y = Math.cos(tag.charCodeAt(0) * 0.1) * 25
       const rotateZ = (tag.length % 5) * 10 - 20
       
       styles[tag] = {
         fontSize: `${fontSize}rem`,
         padding: `${paddingV}rem ${paddingH}rem`,
         opacity: 0.7 + (ratio * 0.3),
-        scale: 1 + (ratio * 0.15),
+        scale: 1 + (ratio * 0.2),  // INCREASED SCALE
         colorClass,
         x,
         y,
@@ -89,6 +121,37 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
     
     return { minCount: min, maxCount: max, tagStyles: styles }
   }, [sortedTags, tagCounts])
+  
+  // Handle hover events with delay to prevent continuous rotation
+  const handleTagMouseEnter = (tag: string) => {
+    // Clear any existing timer
+    if (hoverDelayTimer.current) {
+      clearTimeout(hoverDelayTimer.current);
+    }
+    
+    // Only set hover if we're in a hoverable state
+    if (isHoverable) {
+      // Set a delay before activating the hover effect
+      hoverDelayTimer.current = setTimeout(() => {
+        setHoveredTag(tag);
+      }, 100);
+    }
+  };
+  
+  const handleTagMouseLeave = () => {
+    // Clear any pending hover timer
+    if (hoverDelayTimer.current) {
+      clearTimeout(hoverDelayTimer.current);
+      hoverDelayTimer.current = null;
+    }
+    
+    // Add a small delay before allowing hover again
+    setIsHoverable(false);
+    setTimeout(() => {
+      setHoveredTag(null);
+      setTimeout(() => setIsHoverable(true), 300);
+    }, 50);
+  };
   
   // Hàm tính toán vị trí của tag khi cloud effect được kích hoạt
   const getGalaxyPosition = (tag: string, isHovered: boolean) => {
@@ -123,8 +186,8 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
   
   return (
     <div 
-      className="relative flex flex-wrap gap-4 pt-6 md:pt-0 max-w-4xl justify-center mx-auto min-h-[300px] perspective-[800px]"
-      onMouseLeave={() => setHoveredTag(null)}
+      className="relative flex flex-wrap gap-4 pt-6 md:pt-0 max-w-4xl justify-center mx-auto min-h-[400px] perspective-[800px]"
+      onMouseLeave={handleTagMouseLeave}
     >
       {tagKeys.length === 0 && <p className="font-lexend">No tags found.</p>}
       {sortedTags.map((t) => {
@@ -136,7 +199,7 @@ export default function TagCloud({ tagCounts }: TagCloudProps) {
             key={t} 
             className={`transition-all duration-500 ${isHovered ? '' : 'hover:z-10'}`}
             style={getGalaxyPosition(t, isHovered)}
-            onMouseEnter={() => setHoveredTag(t)}
+            onMouseEnter={() => handleTagMouseEnter(t)}
           >
             <Link
               href={`/tags/${slug(t)}`}

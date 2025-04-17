@@ -14,6 +14,8 @@ const Header = () => {
     typeof window !== 'undefined' ? window.innerWidth : 0
   );
   
+  const [isScrolled, setIsScrolled] = useState(false);
+  
   // Track window resize for responsive layout
   useEffect(() => {
     const handleResize = () => {
@@ -27,11 +29,29 @@ const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
+  // Track scrolling to determine when to make header sticky
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
   // Check if screen is smaller than or equal to 2/3 of full HD (1280px)
   const isSmallScreen = windowWidth <= 1280;
   
   return (
-    <header className={`flex items-center justify-between py-10 ${isSmallScreen ? 'w-full' : ''}`}>
+    <header 
+      className={`${isScrolled ? 'fixed top-0 left-0 right-0 z-50 shadow-md backdrop-blur-sm bg-white/90 dark:bg-gray-950/90 transition-all duration-300' : ''} 
+        flex items-center justify-between py-10 ${isSmallScreen ? 'w-full' : ''} ${isScrolled ? 'py-4 px-4 sm:px-6 lg:px-8' : ''}`}
+    >
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center justify-between">

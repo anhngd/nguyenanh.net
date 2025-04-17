@@ -22,7 +22,7 @@ export default function FooterCredit() {
       {hasStarted ? (
         <>
           <TypeWriter 
-            text="Built with the open-source template by "
+            text="Built with the open-source template by"
             speed={40}
             delay={100}
             onComplete={() => setIsTypingComplete(true)}
