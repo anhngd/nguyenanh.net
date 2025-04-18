@@ -18,7 +18,7 @@ export default function Page() {
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="w-full max-w-4xl mx-auto px-4 py-8 md:py-16">
+      <div className="w-full max-w-[1200px] mx-auto px-4 py-8 md:py-16">
         <div className="text-center mb-8">
           <h1 className="font-prompt text-4xl font-extrabold leading-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">
             Tags

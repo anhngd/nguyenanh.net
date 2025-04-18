@@ -58,7 +58,7 @@ export default function Home({ posts }) {
       
       {/* Hero section with frame */}
       <div className="relative min-h-[100vh] w-full flex items-center justify-center px-4 md:px-6">
-        <div className="w-full max-w-4xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-8 md:py-20">
+        <div className="w-full max-w-[1200px] mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-8 md:py-20">
           {/* Text content - Always on left for md screens and up */}
           <div className="w-full md:w-1/2 text-center md:text-left">
             <h1 className="font-prompt tracking-tight text-gray-900 dark:text-white">
@@ -135,7 +135,7 @@ export default function Home({ posts }) {
       
       {/* Latest posts section */}
       <div ref={blogSectionRef} className="relative bg-white/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-950/90 md:px-6 rounded-t-3xl shadow-lg">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-[1200px]">
           <div className="space-y-2 pb-12 md:space-y-5">
             <h2 className="font-prompt text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
               Latest Posts

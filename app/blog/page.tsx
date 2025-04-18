@@ -23,7 +23,7 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-[1200px] mx-auto">
       <ListLayout
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}

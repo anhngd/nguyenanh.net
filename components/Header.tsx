@@ -52,7 +52,7 @@ const Header = () => {
       className={`${isScrolled ? 'fixed top-0 left-0 right-0 z-50 shadow-md backdrop-blur-sm bg-white/90 dark:bg-gray-950/90 transition-all duration-300' : ''} 
         flex items-center justify-center py-10 ${isScrolled ? 'py-4 px-4 sm:px-6 lg:px-8' : ''}`}
     >
-      <div className="w-full max-w-4xl mx-auto px-4 flex items-center justify-between">
+      <div className="w-full max-w-[1200px] mx-auto px-4 flex items-center justify-between">
         <div>
           <Link href="/" aria-label={siteMetadata.headerTitle}>
             <div className="flex items-center justify-between">
