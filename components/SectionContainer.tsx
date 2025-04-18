@@ -40,7 +40,7 @@ export default function SectionContainer({ children }: Props) {
   };
   
   return (
-    <section className={`mx-auto px-4 sm:px-6 md:px-8 ${getMaxWidthClass()}`}>
+    <section className="mx-auto px-4 sm:px-6 md:px-8 max-w-4xl">
       {children}
     </section>
   )

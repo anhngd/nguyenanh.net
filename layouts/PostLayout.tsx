@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode } from 'react'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
@@ -9,6 +11,7 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import TOCInline from 'pliny/ui/TOCInline'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -27,9 +30,10 @@ interface LayoutProps {
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
   children: ReactNode
+  toc: any
 }
 
-export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
+export default function PostLayout({ content, authorDetails, next, prev, children, toc }: LayoutProps) {
   const { filePath, path, slug, date, title, tags } = content
   const basePath = path.split('/')[0]
 
@@ -56,7 +60,19 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">
-            <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
+            <dl className="pb-10 pt-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:pt-11 xl:scroll-smooth">
+              {/* TOC */}
+              {toc && toc.length > 0 && (
+                <div className="mb-8 border-b border-gray-200 pb-6 dark:border-gray-700">
+                  <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-4">
+                    Table of Contents
+                  </h2>
+                  <div className="toc-styles">
+                    <TOCInline toc={toc} />
+                  </div>
+                </div>
+              )}
+              {/* Author */}
               <dt className="sr-only">Authors</dt>
               <dd>
                 <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
@@ -163,6 +179,36 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           </div>
         </div>
       </article>
+
+      {/* Custom CSS for TOC */}
+      <style jsx global>{`
+        .toc-styles ul {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+          padding-left: 1.5rem;
+        }
+        .toc-styles li {
+          margin: 0.5rem 0;
+        }
+        .toc-styles a {
+          color: #6b7280;
+          text-decoration: none;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          transition-property: color;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-duration: 150ms;
+        }
+        .toc-styles a:hover {
+          color: #f97316;
+        }
+        .dark .toc-styles a {
+          color: #9ca3af;
+        }
+        .dark .toc-styles a:hover {
+          color: #f97316;
+        }
+      `}</style>
     </SectionContainer>
   )
 }

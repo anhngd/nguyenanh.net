@@ -14,11 +14,6 @@ const MAX_DISPLAY = 5
 export default function Home({ posts }) {
   const blogSectionRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-  const [isTextVisible, setIsTextVisible] = useState(true);
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
   
   // Track scroll position to add animations
   useEffect(() => {
@@ -29,61 +24,12 @@ export default function Home({ posts }) {
       } else {
         setIsScrolled(false);
       }
-      
-      // Show back to top button when scrolled down 300px
-      if (scrollPosition > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
     };
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Track window resize for responsive layout
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    // Set initial width
-    setWindowWidth(window.innerWidth);
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-  // Get appropriate max width class based on screen size
-  const getMaxWidthClass = () => {
-    if (windowWidth > 1920) {
-      return 'max-w-7xl'; // For very large screens (>1920px) - 80rem or 1280px
-    } else if (windowWidth > 1440) {
-      return 'max-w-6xl'; // For large screens (>1440px) - 72rem or 1152px
-    } else if (windowWidth > 1024) {
-      return 'max-w-5xl'; // For medium-large screens (>1024px) - 64rem or 1024px
-    } else {
-      return 'max-w-full'; // For smaller screens, allow full width with padding
-    }
-  };
-  
-  // Add animation when component mounts
-  useEffect(() => {
-    // Delay the animation to make it noticeable after page load
-    const timer = setTimeout(() => {
-      setIsTextVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Add hydration fix for SSR
-  useEffect(() => {
-    // Force immediate visibility for initial render
-    setIsTextVisible(true);
-  }, []);
-
   // Function to scroll to blog section when "Read my blog" is clicked
   const scrollToBlogSection = (e) => {
     e.preventDefault();
@@ -91,17 +37,6 @@ export default function Home({ posts }) {
       blogSectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
-  // Function to scroll back to top
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-  
-  // Check if screen is smaller than or equal to 2/3 of full HD (1280px)
-  const isSmallScreen = windowWidth <= 1280;
 
   return (
     <>
@@ -253,14 +188,11 @@ export default function Home({ posts }) {
                         <div className="text-base font-medium leading-6">
                           <Link
                             href={`/blog/${slug}`}
-                            className="font-lexend text-orange-500 inline-flex items-center gap-1 hover:gap-2 transition-all hover:opacity-80 hover:underline"
-                            aria-label={`Read more: "${title}"`}
+                            className="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400"
+                            aria-label={`Read "${title}"`}
                             onClick={(e) => e.stopPropagation()}
                           >
-                            Read more
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
+                            Read more &rarr;
                           </Link>
                         </div>
                       </div>
@@ -270,108 +202,8 @@ export default function Home({ posts }) {
               )
             })}
           </div>
-          
-          {posts.length > MAX_DISPLAY && (
-            <div className="mt-12 flex justify-center md:justify-end">
-              <Link
-                href="/blog"
-                className="font-prompt inline-flex items-center gap-2 rounded-full border-2 border-gray-300 bg-transparent px-6 py-2 text-center text-base font-medium text-gray-900 transition-all duration-300 hover:border-orange-500 hover:text-orange-500 hover:shadow-md dark:border-gray-700 dark:text-white dark:hover:border-orange-500 dark:hover:text-orange-500"
-                aria-label="All posts"
-              >
-                View all posts
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </Link>
-            </div>
-          )}
         </div>
       </div>
-      
-      {/* Newsletter section */}
-      {siteMetadata.newsletter?.provider && (
-        <div className="relative bg-gray-50/90 backdrop-blur-sm px-4 py-16 dark:bg-gray-900/90 md:px-6">
-          <div className={`mx-auto ${getMaxWidthClass()} rounded-2xl bg-orange-500/10 p-8 dark:bg-orange-500/5`}>
-            <NewsletterForm />
-          </div>
-        </div>
-      )}
-      
-      {/* Back to top button */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 shadow-lg transition-all duration-300 hover:bg-orange-500/90 hover:shadow-orange-500/30 ${
-          showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
-        }`}
-        aria-label="Back to top"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6 text-white" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
-            
-      {/* Custom animations and styles */}
-      <style jsx global>{`
-        .pattern-grid-lg {
-          background-image: 
-            linear-gradient(to right, rgba(100, 100, 100, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(100, 100, 100, 0.1) 1px, transparent 1px);
-          background-size: 40px 40px;
-        }
-        
-        .animate-bounce-slow {
-          animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-12px);
-          }
-          60% {
-            transform: translateY(-5px);
-          }
-        }
-        
-        .hover\:shadow-orange-500\/30:hover {
-          box-shadow: 0 8px 16px -4px rgba(249, 115, 22, 0.3);
-        }
-        
-        /* Text reveal animation */
-        @keyframes reveal {
-          0% {
-            transform: translateY(20px);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-        
-        @keyframes underline {
-          from { width: 0; }
-          to { width: 100%; }
-        }
-        
-        /* Cursor blink animation */
-        .animate-blink {
-          animation: blink 0.7s infinite;
-        }
-        
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-      `}</style>
     </>
   )
 }
