@@ -4843,6 +4843,7 @@ __metadata:
     next: "npm:14.2.3"
     next-contentlayer2: "npm:0.5.0"
     next-optimized-images: "npm:^2.6.2"
+    next-seo: "npm:^6.6.0"
     next-themes: "npm:^0.3.0"
     nprogress: "npm:^0.2.0"
     pliny: "npm:0.2.1"
@@ -12468,6 +12469,17 @@ __metadata:
     raw-loader: "npm:^2.0.0"
     url-loader: "npm:^1.1.2"
   checksum: 10c0/f6ac1bc05b1f3f3d84859ac1aa816bf8be243cd2da1bb04d7fa4ab855041fe1467da234cf2407ee9fb2094faafaeceaf839edb34899fb9557face9feeb10d3da
+  languageName: node
+  linkType: hard
+
+"next-seo@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "next-seo@npm:6.6.0"
+  peerDependencies:
+    next: ^8.1.1-canary.54 || >=9.0.0
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: 10c0/60eff5b6fdd83306d26968dfc23b5df502bf014b771b0910bf6cfec944de6f262d7d872ae3155717a31a1dd51ae48db007ce4c0f78f8b435deff37bdc63beb76
   languageName: node
   linkType: hard
 

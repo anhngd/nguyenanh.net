@@ -1,24 +1,21 @@
 import 'css/prism.css'
 import 'katex/dist/katex.css'
 
-import PageTitle from '@/components/PageTitle'
-import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
+import { coreContent } from 'pliny/utils/contentlayer'
 import { allBlogs, allAuthors } from 'contentlayer/generated'
 import type { Authors, Blog } from 'contentlayer/generated'
-import PostSimple from '@/layouts/PostSimple'
 import PostLayout from '@/layouts/PostLayout'
-import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
-import { notFound } from 'next/navigation'
+import Image from '@/components/Image'
+import BlogNewsletterForm from '@/components/BlogNewsletterForm'
+import TOCInline from '@/components/TOCInline'
 
-const defaultLayout = 'PostLayout'
-const layouts = {
-  PostSimple,
-  PostLayout,
-  PostBanner,
+const components = {
+  Image,
+  BlogNewsletterForm,
+  TOCInline,
 }
 
 export async function generateMetadata({
@@ -30,9 +27,9 @@ export async function generateMetadata({
   const post = allBlogs.find((p) => p.slug === slug)
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+    const authorResults = allAuthors.find((p) => p.slug === author) as Authors | undefined
+    return authorResults ? coreContent(authorResults) : undefined
+  }).filter((author): author is NonNullable<typeof author> => author !== undefined)
   if (!post) {
     return
   }
@@ -80,43 +77,22 @@ export const generateStaticParams = async () => {
   return paths
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default function PostPage({ params }: { params: { slug: string[] } }) {
   const slug = decodeURI(params.slug.join('/'))
-  // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
-  const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
-  if (postIndex === -1) {
-    return notFound()
-  }
-
-  const prev = sortedCoreContents[postIndex + 1]
-  const next = sortedCoreContents[postIndex - 1]
-  const post = allBlogs.find((p) => p.slug === slug) as Blog
+  const post = allBlogs.find((p) => p.slug === slug) as Blog | undefined
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
-  const mainContent = coreContent(post)
-  const jsonLd = post.structuredData
-  jsonLd['author'] = authorDetails.map((author) => {
-    return {
-      '@type': 'Person',
-      name: author.name,
-    }
-  })
+    const authorResults = allAuthors.find((p) => p.slug === author) as Authors | undefined
+    return authorResults ? coreContent(authorResults) : undefined
+  }).filter((author): author is NonNullable<typeof author> => author !== undefined)
 
-  const Layout = layouts[post.layout || defaultLayout]
+  if (!post) {
+    return null
+  }
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev} toc={post.toc}>
-        <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
-      </Layout>
-    </>
+    <PostLayout content={post} authorDetails={authorDetails}>
+      <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
+    </PostLayout>
   )
 }
