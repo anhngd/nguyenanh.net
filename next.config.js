@@ -73,8 +73,6 @@ const nextConfig = {
     // Remove this if you're using emotion for styling
     styledComponents: false,
   },
-  output: 'standalone',
-  distDir: 'out',
   images: {
     remotePatterns: [
       {
@@ -105,8 +103,4 @@ const nextConfig = {
   },
 }
 
-// Combine the configs
-module.exports = () => {
-  const plugins = [withContentlayer, withBundleAnalyzer]
-  return plugins.reduce((acc, plugin) => plugin(acc), nextConfig)
-}
+module.exports = withBundleAnalyzer(withContentlayer(nextConfig))
